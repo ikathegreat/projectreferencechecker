@@ -1,0 +1,6 @@
+//Allowed ignore project file conventions:
+//MyProject - Fixed name
+//MyProject* - Start with
+//*MyProject - Ends with 
+//*MyProject* - Contains
+//*Configurations*

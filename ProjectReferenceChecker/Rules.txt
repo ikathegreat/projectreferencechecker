@@ -1,0 +1,114 @@
+//RuleName,Project(s) to check (name), Rule Type (NotAllowed|Allowed|MustInclude|CodeCannotContain), Reference, ValidationType(Optional)(Violation [default]|Warning)
+//Allowed overrides NotAllowed. Allowed doesn't support * wildcards
+//CodeCannotContain will scan Compile Include .cs files with a given project
+
+//Allowed ignore project file name/references conventions:
+//MyProject - Fixed name
+//MyProject* - Start with
+//*MyProject - Ends with 
+//*MyProject* - Contains
+
+////////////////////////////////////////////////////Start Rules
+
+//No Models can refer to ViewModels or Views
+ModelsCannotReferToAnyViews,*Models*,NotAllowed,*Views*
+
+//No one can refer to Windows.Forms.MessageBox
+NoOneCanReferToWindowsFormsMessageBox,**,NotAllowed,Windows.Forms.MessageBox
+CodeCannotContainWindowsFormsMessageBox,**,CodeCannotContain,*Forms.MessageBox*
+
+//No ViewModels can refer any Views
+ViewModelsCannotReferToAnyViews,*ViewModels*,NotAllowed,*Views*
+
+//Views can only refer to ViewModels
+ViewsCannotReferToAnyModels,*Views*,NotAllowed,*.Models*,Warning
+QuoteViewCanReferToEntityFramework,Quote.Views,Allowed,SigmaTEK.Models.EntityFramework
+
+//No other module (except Quote) can refer SolidX*
+UFCannotReferToSolidX,*Unfolder*,NotAllowed,SolidX*
+UFCanReferToSolidXBase,*Unfolder*,Allowed,SolidX.Base*
+
+ProfilerCannotReferToSolidX,*Profiler*,NotAllowed,SolidX*
+ProfilerCanReferToSolidXBase,*Profiler*,Allowed,SolidX.Base*
+
+PressBrakeCannotReferToSolidX,*PressBrake*,NotAllowed,SolidX*
+PressBrakeCanReferToSolidXBase,*PressBrake*,Allowed,SolidX.Base*
+
+TubeCannotReferToSolidX,*Tube*,NotAllowed,SolidX*
+TubeCanReferToSolidXBase,*Tube*,Allowed,SolidX.Base*
+
+PunchingCannotReferToSolidX,*Punching*,NotAllowed,SolidX*
+PunchingCanReferToSolidXBase,*Punching*,Allowed,SolidX.Base*
+
+PocketMillingCannotReferToSolidX,*PocketMilling*,NotAllowed,SolidX*
+PocketMillingCanReferToSolidXBase,*PocketMilling*,Allowed,SolidX.Base*
+
+CTLCannotReferToSolidX,*CTL*,NotAllowed,SolidX*
+CTLCanReferToSolidXBase,*CTL*,Allowed,SolidX.Base*
+
+//Module to module dependencies
+UFCannotReferToPressBrake,*Unfolder*,NotAllowed,PressBrake*
+UFCannotReferToProfiler,*Unfolder*,NotAllowed,Profiler*
+UFCannotReferToTube,*Unfolder*,NotAllowed,Tube*
+UFCannotReferToPunching,*Unfolder*,NotAllowed,Punching*
+UFCannotReferToPocketMilling,*Unfolder*,NotAllowed,PocketMilling*
+UFCannotReferToCTL,*Unfolder*,NotAllowed,CTL*
+
+ProfilerCannotReferToUnfolder,*Profiler*,NotAllowed,Unfolder*
+ProfilerCannotReferToPressBrake,*Profiler*,NotAllowed,PressBrake*
+ProfilerCannotReferToTube,*Profiler*,NotAllowed,Tube*
+ProfilerCannotReferToPunching,*Profiler*,NotAllowed,Punching*
+ProfilerCannotReferToPocketMilling,*Profiler*,NotAllowed,PocketMilling*
+ProfilerCannotReferToCTL,*Profiler*,NotAllowed,CTL*
+
+//PressBrakeCannotReferToUnfolder,*PressBrake*,NotAllowed,Unfolder*
+PressBrakeCannotReferToPressBrake,*PressBrake*,NotAllowed,Profiler*
+PressBrakeCannotReferToTube,*PressBrake*,NotAllowed,Tube*
+PressBrakeCannotReferToPunching,*PressBrake*,NotAllowed,Punching*
+PressBrakeCannotReferToPocketMilling,*PressBrake*,NotAllowed,PocketMilling*
+PressBrakeCannotReferToCTL,*PressBrake*,NotAllowed,CTL*
+
+TubeCannotReferToUnfolder,*Tube*,NotAllowed,Unfolder*
+//TubeCannotReferToProfiler,*Tube*,NotAllowed,Profiler*
+TubeCannotReferToPressBrake,*Tube*,NotAllowed,PressBrake*
+TubeCannotReferToPunching,*Tube*,NotAllowed,Punching*
+TubeCannotReferToPocketMilling,*Tube*,NotAllowed,PocketMilling*
+TubeCannotReferToCTL,*Tube*,NotAllowed,CTL*
+
+PunchingCannotReferToUnfolder,*Punching*,NotAllowed,Unfolder*
+//PunchingCannotReferToProfiler,*Punching*,NotAllowed,Profiler*
+PunchingCannotReferToPressBrake,*Punching*,NotAllowed,PressBrake*
+PunchingCannotReferToTube,*Punching*,NotAllowed,Tube*
+PunchingCannotReferToPocketMilling,*Punching*,NotAllowed,PocketMilling*
+PunchingCannotReferToCTL,*Punching*,NotAllowed,CTL*
+
+PocketMillingCannotReferToUnfolder,*PocketMilling*,NotAllowed,Unfolder*
+PocketMillingCannotReferToPressBrake,*PocketMilling*,NotAllowed,PressBrake*
+//PocketMillingCannotReferToProfiler,*PocketMilling*,NotAllowed,Profiler*
+PocketMillingCannotReferToTube,*PocketMilling*,NotAllowed,Tube*
+PocketMillingCannotReferToPunching,*PocketMilling*,NotAllowed,Punching*
+PocketMillingCannotReferToCTL,*PocketMilling*,NotAllowed,CTL*
+
+CTLCannotReferToCTL,*CTL*,NotAllowed,Unfolder*
+CTLCannotReferToPressBrake,*CTL*,NotAllowed,PressBrake*
+CTLCannotReferToProfiler,*CTL*,NotAllowed,Profiler*
+CTLCannotReferToTube,*CTL*,NotAllowed,Tube*
+CTLCannotReferToPunching,*CTL*,NotAllowed,Punching*
+CTLCannotReferToPocketMilling,*CTL*,NotAllowed,PocketMilling*
+
+//Settings should be in corresponding Configuration assembly. Configuration cannot refer Models.
+ConfigurationsCannotReferToModels,*Configurations,NotAllowed,*.Models
+ConfigurationsCannotReferToSolidX,*Configurations,NotAllowed,SolidX*
+//ConfigurationsCannotReferToSolidXBaseConfigurations,*Configurations,Allowed,SolidX.Base.Configurations
+//ConfigurationsCannotReferToSolidXBaseLogger,*Configurations,Allowed,SolidX.Base.Logger
+
+//DevExpress dependencies
+ViewModelsCannotReferToDX,*ViewModels*,NotAllowed,*DevExpress*
+ReportViewModelsCanReferToDX,*Reports.ViewModels*,Allowed,*DevExpress*
+ModelsCannotReferToDX,*.Models*,NotAllowed,*DevExpress*
+
+
+//Random tests
+//AllViewModelsMustReferToBaseViewModels*ViewModels*,MustInclude,Base.ViewModels
+//QuoteVMReportsAneReferToDX,Quote.Reports.ViewModels,Allowed,*DevExpress*
+//SolidXVMReportsAneReferToDX,SolidX.Reports.ViewModels,Allowed,*DevExpress*
