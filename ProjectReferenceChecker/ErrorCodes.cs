@@ -9,7 +9,7 @@ namespace ProjectReferenceChecker
 {
     public enum ErrorCodes
     {
-        ViolationsFound,
+        ViolationsFound = 1,
         UnknownCommandLineExceptionError,
         InvalidSecurityMode,
         ProjectsDirectoryDoesNotExist,

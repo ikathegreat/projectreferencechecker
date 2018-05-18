@@ -50,7 +50,7 @@ namespace ProjectReferenceChecker
                 };
 
                 processor.Process();
-                Environment.ExitCode = -1; //Success
+                Environment.ExitCode = 0; //Success
 
             }
             catch (CommandLineException e)
