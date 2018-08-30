@@ -25,85 +25,88 @@ ViewsCannotReferToAnyModels,*Views*,NotAllowed,*.Models*,Warning
 QuoteViewCanReferToEntityFramework,Quote.Views,Allowed,SigmaTEK.Models.EntityFramework
 
 //No other module (except Quote) can refer SolidX*
-UFCannotReferToSolidX,*Unfolder*,NotAllowed,SolidX*
-UFCanReferToSolidXBase,*Unfolder*,Allowed,SolidX.Base*
+//UFCannotReferToSolidX,*Unfolder*,NotAllowed,SolidX*
+//UFCanReferToSolidXBase,*Unfolder*,Allowed,SolidX.Base*
 
-ProfilerCannotReferToSolidX,*Profiler*,NotAllowed,SolidX*
-ProfilerCanReferToSolidXBase,*Profiler*,Allowed,SolidX.Base*
+//ProfilerCannotReferToSolidX,*Profiler*,NotAllowed,SolidX*
+//ProfilerCanReferToSolidXBase,*Profiler*,Allowed,SolidX.Base*
 
-PressBrakeCannotReferToSolidX,*PressBrake*,NotAllowed,SolidX*
-PressBrakeCanReferToSolidXBase,*PressBrake*,Allowed,SolidX.Base*
+//PressBrakeCannotReferToSolidX,*PressBrake*,NotAllowed,SolidX*
+//PressBrakeCanReferToSolidXBase,*PressBrake*,Allowed,SolidX.Base*
 
-TubeCannotReferToSolidX,*Tube*,NotAllowed,SolidX*
-TubeCanReferToSolidXBase,*Tube*,Allowed,SolidX.Base*
+//TubeCannotReferToSolidX,*Tube*,NotAllowed,SolidX*
+//TubeCanReferToSolidXBase,*Tube*,Allowed,SolidX.Base*
 
-PunchingCannotReferToSolidX,*Punching*,NotAllowed,SolidX*
-PunchingCanReferToSolidXBase,*Punching*,Allowed,SolidX.Base*
+//PunchingCannotReferToSolidX,*Punching*,NotAllowed,SolidX*
+//PunchingCanReferToSolidXBase,*Punching*,Allowed,SolidX.Base*
 
-PocketMillingCannotReferToSolidX,*PocketMilling*,NotAllowed,SolidX*
-PocketMillingCanReferToSolidXBase,*PocketMilling*,Allowed,SolidX.Base*
+//PocketMillingCannotReferToSolidX,*PocketMilling*,NotAllowed,SolidX*
+//PocketMillingCanReferToSolidXBase,*PocketMilling*,Allowed,SolidX.Base*
 
-CTLCannotReferToSolidX,*CTL*,NotAllowed,SolidX*
-CTLCanReferToSolidXBase,*CTL*,Allowed,SolidX.Base*
+//CTLCannotReferToSolidX,*CTL*,NotAllowed,SolidX*
+//CTLCanReferToSolidXBase,*CTL*,Allowed,SolidX.Base*
 
 //Module to module dependencies
-UFCannotReferToPressBrake,*Unfolder*,NotAllowed,PressBrake*
-UFCannotReferToProfiler,*Unfolder*,NotAllowed,Profiler*
-UFCannotReferToTube,*Unfolder*,NotAllowed,Tube*
-UFCannotReferToPunching,*Unfolder*,NotAllowed,Punching*
-UFCannotReferToPocketMilling,*Unfolder*,NotAllowed,PocketMilling*
-UFCannotReferToCTL,*Unfolder*,NotAllowed,CTL*
+UFCannotReferToPressBrake,*Unfolder*,NotAllowed,PressBrake*,Warning
+UFCannotReferToProfiler,*Unfolder*,NotAllowed,Profiler*,Warning
+UFCannotReferToTube,*Unfolder*,NotAllowed,Tube*,Warning
+UFCannotReferToPunching,*Unfolder*,NotAllowed,Punching*,Warning
+UFCannotReferToPocketMilling,*Unfolder*,NotAllowed,PocketMilling*,Warning
+UFCannotReferToCTL,*Unfolder*,NotAllowed,CTL*,Warning
 
-ProfilerCannotReferToUnfolder,*Profiler*,NotAllowed,Unfolder*
-ProfilerCannotReferToPressBrake,*Profiler*,NotAllowed,PressBrake*
-ProfilerCannotReferToTube,*Profiler*,NotAllowed,Tube*
-ProfilerCannotReferToPunching,*Profiler*,NotAllowed,Punching*
-ProfilerCannotReferToPocketMilling,*Profiler*,NotAllowed,PocketMilling*
-ProfilerCannotReferToCTL,*Profiler*,NotAllowed,CTL*
+ProfilerCannotReferToUnfolder,*Profiler*,NotAllowed,Unfolder*,Warning
+ProfilerCannotReferToPressBrake,*Profiler*,NotAllowed,PressBrake*,Warning
+ProfilerCannotReferToTube,*Profiler*,NotAllowed,Tube*,Warning
+ProfilerCannotReferToPunching,*Profiler*,NotAllowed,Punching*,Warning
+ProfilerCannotReferToPocketMilling,*Profiler*,NotAllowed,PocketMilling*,Warning
+ProfilerCannotReferToCTL,*Profiler*,NotAllowed,CTL*,Warning
 
-//PressBrakeCannotReferToUnfolder,*PressBrake*,NotAllowed,Unfolder*
-PressBrakeCannotReferToPressBrake,*PressBrake*,NotAllowed,Profiler*
-PressBrakeCannotReferToTube,*PressBrake*,NotAllowed,Tube*
-PressBrakeCannotReferToPunching,*PressBrake*,NotAllowed,Punching*
-PressBrakeCannotReferToPocketMilling,*PressBrake*,NotAllowed,PocketMilling*
+//PressBrakeCannotReferToUnfolder,*PressBrake*,NotAllowed,Unfolder*,Warning
+PressBrakeCannotReferToPressBrake,*PressBrake*,NotAllowed,Profiler*,Warning
+PressBrakeCannotReferToTube,*PressBrake*,NotAllowed,Tube*,Warning
+PressBrakeCannotReferToPunching,*PressBrake*,NotAllowed,Punching*,Warning
+PressBrakeCannotReferToPocketMilling,*PressBrake*,NotAllowed,PocketMilling*,Warning
 PressBrakeCannotReferToCTL,*PressBrake*,NotAllowed,CTL*
 
-TubeCannotReferToUnfolder,*Tube*,NotAllowed,Unfolder*
-//TubeCannotReferToProfiler,*Tube*,NotAllowed,Profiler*
-TubeCannotReferToPressBrake,*Tube*,NotAllowed,PressBrake*
-TubeCannotReferToPunching,*Tube*,NotAllowed,Punching*
-TubeCannotReferToPocketMilling,*Tube*,NotAllowed,PocketMilling*
+TubeCannotReferToUnfolder,*Tube*,NotAllowed,Unfolder*,Warning
+//TubeCannotReferToProfiler,*Tube*,NotAllowed,Profiler*,Warning
+TubeCannotReferToPressBrake,*Tube*,NotAllowed,PressBrake*,Warning
+TubeCannotReferToPunching,*Tube*,NotAllowed,Punching*,Warning
+TubeCannotReferToPocketMilling,*Tube*,NotAllowed,PocketMilling*,Warning
 TubeCannotReferToCTL,*Tube*,NotAllowed,CTL*
 
-PunchingCannotReferToUnfolder,*Punching*,NotAllowed,Unfolder*
-//PunchingCannotReferToProfiler,*Punching*,NotAllowed,Profiler*
-PunchingCannotReferToPressBrake,*Punching*,NotAllowed,PressBrake*
-PunchingCannotReferToTube,*Punching*,NotAllowed,Tube*
-PunchingCannotReferToPocketMilling,*Punching*,NotAllowed,PocketMilling*
-PunchingCannotReferToCTL,*Punching*,NotAllowed,CTL*
+PunchingCannotReferToUnfolder,*Punching*,NotAllowed,Unfolder*,Warning
+//PunchingCannotReferToProfiler,*Punching*,NotAllowed,Profiler*,Warning
+PunchingCannotReferToPressBrake,*Punching*,NotAllowed,PressBrake*,Warning
+PunchingCannotReferToTube,*Punching*,NotAllowed,Tube*,Warning
+PunchingCannotReferToPocketMilling,*Punching*,NotAllowed,PocketMilling*,Warning
+PunchingCannotReferToCTL,*Punching*,NotAllowed,CTL*,Warning
 
-PocketMillingCannotReferToUnfolder,*PocketMilling*,NotAllowed,Unfolder*
-PocketMillingCannotReferToPressBrake,*PocketMilling*,NotAllowed,PressBrake*
-//PocketMillingCannotReferToProfiler,*PocketMilling*,NotAllowed,Profiler*
-PocketMillingCannotReferToTube,*PocketMilling*,NotAllowed,Tube*
-PocketMillingCannotReferToPunching,*PocketMilling*,NotAllowed,Punching*
-PocketMillingCannotReferToCTL,*PocketMilling*,NotAllowed,CTL*
+PocketMillingCannotReferToUnfolder,*PocketMilling*,NotAllowed,Unfolder*,Warning
+PocketMillingCannotReferToPressBrake,*PocketMilling*,NotAllowed,PressBrake*,Warning
+//PocketMillingCannotReferToProfiler,*PocketMilling*,NotAllowed,Profiler*,Warning
+PocketMillingCannotReferToTube,*PocketMilling*,NotAllowed,Tube*,Warning
+PocketMillingCannotReferToPunching,*PocketMilling*,NotAllowed,Punching*,Warning
+PocketMillingCannotReferToCTL,*PocketMilling*,NotAllowed,CTL*,Warning
 
-CTLCannotReferToCTL,*CTL*,NotAllowed,Unfolder*
-CTLCannotReferToPressBrake,*CTL*,NotAllowed,PressBrake*
-CTLCannotReferToProfiler,*CTL*,NotAllowed,Profiler*
-CTLCannotReferToTube,*CTL*,NotAllowed,Tube*
-CTLCannotReferToPunching,*CTL*,NotAllowed,Punching*
-CTLCannotReferToPocketMilling,*CTL*,NotAllowed,PocketMilling*
+CTLCannotReferToUnfolder,*CTL*,NotAllowed,Unfolder*,Warning
+CTLCannotReferToPressBrake,*CTL*,NotAllowed,PressBrake*,Warning
+CTLCannotReferToProfiler,*CTL*,NotAllowed,Profiler*,Warning
+CTLCannotReferToTube,*CTL*,NotAllowed,Tube*,Warning
+CTLCannotReferToPunching,*CTL*,NotAllowed,Punching*,Warning
+CTLCannotReferToPocketMilling,*CTL*,NotAllowed,PocketMilling*,Warning
 
 //Settings should be in corresponding Configuration assembly. Configuration cannot refer Models.
 ConfigurationsCannotReferToModels,*Configurations,NotAllowed,*.Models
-ConfigurationsCannotReferToSolidX,*Configurations,NotAllowed,SolidX*
-//ConfigurationsCannotReferToSolidXBaseConfigurations,*Configurations,Allowed,SolidX.Base.Configurations
+ConfigurationsCannotReferToSolidX,*Configurations,NotAllowed,SolidX.*
+ConfigurationsCannotReferToSolidXBaseConfigurations,*Configurations,Allowed,SolidX.Base.Configurations
+ConfigurationsCannotReferToSolidXBaseConfigurations,*Configurations,Allowed,SolidX.Base.Enums
+ConfigurationsCannotReferToSolidXBaseConfigurations,*Configurations,Allowed,SolidX.Base.Logger
 //ConfigurationsCannotReferToSolidXBaseLogger,*Configurations,Allowed,SolidX.Base.Logger
 
 //DevExpress dependencies
 ViewModelsCannotReferToDX,*ViewModels*,NotAllowed,*DevExpress*
+SerializersCannotReferToDX,*Serializer*,NotAllowed,*DevExpress*
 ReportViewModelsCanReferToDX,*Reports.ViewModels*,Allowed,*DevExpress*
 ModelsCannotReferToDX,*.Models*,NotAllowed,*DevExpress*
 
