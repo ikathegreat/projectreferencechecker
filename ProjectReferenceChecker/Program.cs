@@ -20,6 +20,8 @@ namespace ProjectReferenceChecker
 
             /*
              * -p "C:\Users\paul.ikeda\source\Repos\SX_Core" -w
+             *
+             * -p "C:\Users\paul.ikeda\source\Repos\SX_Core" -b "master" -g "SX_Core" -w -c
              */
 
             //Required
@@ -46,6 +48,22 @@ namespace ProjectReferenceChecker
             { Optional = true };
             parser.Arguments.Add(waitOnCompletion);
 
+            var repositoryName = new ValueArgument<string>(
+                    'g', "repositoryName",
+                    "Name of the repository for previous build comparison")
+                { Optional = true };
+            parser.Arguments.Add(repositoryName);
+            var branchName = new ValueArgument<string>(
+                    'b', "branchName",
+                    "Name of the repository's branch for previous build comparison")
+                { Optional = true };
+            parser.Arguments.Add(branchName);
+            var enableRunAndCompareMode = new SwitchArgument(
+                    'c', "enableRunAndCompareMode",
+                    "Process normally and compare against previous build. Return an error code if the number of warnings or errors has increased. Requires repository and branch names.", false)
+                { Optional = true };
+            parser.Arguments.Add(enableRunAndCompareMode);
+
             try
             {
                 parser.ParseCommandLine(args);
@@ -56,7 +74,10 @@ namespace ProjectReferenceChecker
                     ProjectsDirectory = projectFilesPath.Value,
                     RuleFilePath = ruleFilePath.Value,
                     OutputProjectsToSearch = outputProjectsToSearch.Value,
-                    PauseBeforeExit = waitOnCompletion.Value
+                    PauseBeforeExit = waitOnCompletion.Value,
+                    RepositoryName =  repositoryName.Value,
+                    BranchName = branchName.Value,
+                    RunAndCompareMode=enableRunAndCompareMode.Value
 
                 };
 

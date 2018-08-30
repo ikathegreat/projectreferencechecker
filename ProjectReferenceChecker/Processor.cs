@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace ProjectReferenceChecker
 {
@@ -15,7 +17,10 @@ namespace ProjectReferenceChecker
         public bool OutputProjectsToSearch { get; set; }
         public string RuleFilePath { get; set; }
         public string IgnoreFilesFilePath { get; set; }
+        public string BranchName { get; set; }
+        public string RepositoryName { get; set; }
         public bool PauseBeforeExit { get; set; } = false;
+        public bool RunAndCompareMode { get; set; } = false;
 
         private List<Project> projectsList;
         private List<Rule> rulesList;
@@ -63,16 +68,23 @@ namespace ProjectReferenceChecker
 
             var validator = new Validator(projectsList, rulesList);
             validator.Validate();
+
+            var warningsStringList = new List<string>();
+            var violationsStringList = new List<string>();
+
             //Warnings
             validator.WarningList.Where(x => x.RuleType != RuleType.CodeCannotContain).ToList()
-                .ForEach(x => Console.WriteLine(string.Format($" {x.RuleName} Warning: \"{x.ProjectToCheck}\" {x.RuleType} reference to \"{x.Reference}\"")));
+                    .ForEach(x => warningsStringList.Add(string.Format($" {x.RuleName} Warning: \"{x.ProjectToCheck}\" {x.RuleType} reference to \"{x.Reference}\"")));
             validator.WarningList.Where(x => x.RuleType == RuleType.CodeCannotContain).ToList()
-                .ForEach(x => Console.WriteLine(string.Format($" {x.RuleName} Warning: \"{x.ProjectToCheck}\" {x.RuleType} \"{x.Reference}\"")));
+                .ForEach(x => warningsStringList.Add(string.Format($" {x.RuleName} Warning: \"{x.ProjectToCheck}\" {x.RuleType} \"{x.Reference}\"")));
             //Violations
             validator.ViolationList.Where(x => x.RuleType != RuleType.CodeCannotContain).ToList()
-                .ForEach(x => Console.WriteLine(string.Format($" {x.RuleName} Violation: \"{x.ProjectToCheck}\" {x.RuleType} reference to \"{x.Reference}\"")));
+                .ForEach(x => violationsStringList.Add(string.Format($" {x.RuleName} Violation: \"{x.ProjectToCheck}\" {x.RuleType} reference to \"{x.Reference}\"")));
             validator.ViolationList.Where(x => x.RuleType == RuleType.CodeCannotContain).ToList()
-                .ForEach(x => Console.WriteLine(string.Format($" {x.RuleName} Violation: \"{x.ProjectToCheck}\" {x.RuleType} \"{x.Reference}\"")));
+                .ForEach(x => violationsStringList.Add(string.Format($" {x.RuleName} Violation: \"{x.ProjectToCheck}\" {x.RuleType} \"{x.Reference}\"")));
+
+            warningsStringList.ForEach(Console.WriteLine);
+            violationsStringList.ForEach(Console.WriteLine);
 
             Console.WriteLine(string.Format($"Found {validator.WarningList.Count} warnings."));
             Console.WriteLine(string.Format($"Found {validator.ViolationList.Count} violations."));
@@ -80,12 +92,93 @@ namespace ProjectReferenceChecker
             stopwatch.Stop();
             var t = TimeSpan.FromMilliseconds(stopwatch.ElapsedMilliseconds);
             Console.WriteLine($"Elapsed time: {t.Hours:D2}h:{t.Minutes:D2}m:{t.Seconds:D2}s:{t.Milliseconds:D3}ms");
+
+            if (!string.IsNullOrEmpty(RepositoryName) && !string.IsNullOrEmpty(BranchName))
+            {
+                var resultDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),
+                    "SigmaTEK", "Repository Integrity", RepositoryName, BranchName, "References");
+
+                Directory.CreateDirectory(resultDir);
+                var resultFile = Path.Combine(resultDir, "Result.xml");
+
+                var result = new Result()
+                {
+                    ViolationsCount = validator.ViolationList.Count,
+                    WarningsCount = validator.WarningList.Count,
+                    WarningsStringList = warningsStringList,
+                    ViolationsStringList = violationsStringList
+                };
+
+                if (RunAndCompareMode)
+                {
+                    var prevResult = LoadPrevResult(resultFile, new Result());
+
+                    if (prevResult.ViolationsCount < result.ViolationsCount)
+                    {
+                        Exit(ErrorCodes.ViolationsIncreased);
+                    }
+                    else if (prevResult.WarningsCount < result.WarningsCount)
+                    {
+                        Exit(ErrorCodes.WarningsIncreased);
+                    }
+                }
+                else
+                {
+                    SaveResult(resultFile, result);
+                }
+            }
+            else
+            {
+                if (RunAndCompareMode)
+                    Console.WriteLine($"Error: Run and compare mode enabled, but repository and/or branch names are empty.");
+            }
+
+
             if (validator.ViolationList.Count > 0)
             {
                 Exit(ErrorCodes.ViolationsFound);
             }
         }
 
+        private static Result LoadPrevResult(string resultFile, Result prevResult)
+        {
+            TextReader reader = new StreamReader(resultFile);
+            var xmlSerializer = new XmlSerializer(typeof(Result));
+
+            try
+            {
+                prevResult = (Result)xmlSerializer.Deserialize(reader);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception occured while reading from XML: " + ex.Message);
+            }
+            finally
+            {
+                reader.Close();
+            }
+
+            return prevResult;
+        }
+
+        private static void SaveResult(string resultFile, Result result)
+        {
+            TextWriter writer = new StreamWriter(resultFile);
+            var xmlSerializer = new XmlSerializer(typeof(Result));
+
+            try
+            {
+                xmlSerializer.Serialize(writer, result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception occured while writing to XML: " + ex.Message);
+            }
+            finally
+            {
+                writer.Close();
+            }
+        }
 
 
         private void BuildRules()

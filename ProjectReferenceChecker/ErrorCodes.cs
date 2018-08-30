@@ -14,6 +14,8 @@ namespace ProjectReferenceChecker
         InvalidSecurityMode,
         ProjectsDirectoryDoesNotExist,
         RuleFileDoesNotExist,
-        NoProjectsFound
+        NoProjectsFound,
+        WarningsIncreased,
+        ViolationsIncreased
     }
 }
