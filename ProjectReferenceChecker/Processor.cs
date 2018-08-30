@@ -15,6 +15,7 @@ namespace ProjectReferenceChecker
         public bool OutputProjectsToSearch { get; set; }
         public string RuleFilePath { get; set; }
         public string IgnoreFilesFilePath { get; set; }
+        public bool PauseBeforeExit { get; set; } = false;
 
         private List<Project> projectsList;
         private List<Rule> rulesList;
@@ -32,7 +33,7 @@ namespace ProjectReferenceChecker
             if (csprojFilesList.Count == 0)
             {
                 Console.WriteLine(string.Format($"Error: No .csproj files found in {ProjectsDirectory}"));
-                Environment.Exit((int)ErrorCodes.NoProjectsFound);
+                Exit(ErrorCodes.NoProjectsFound);
             }
 
             projectsList = new List<Project>();
@@ -81,7 +82,7 @@ namespace ProjectReferenceChecker
             Console.WriteLine($"Elapsed time: {t.Hours:D2}h:{t.Minutes:D2}m:{t.Seconds:D2}s:{t.Milliseconds:D3}ms");
             if (validator.ViolationList.Count > 0)
             {
-                Environment.Exit((int)ErrorCodes.ViolationsFound);
+                Exit(ErrorCodes.ViolationsFound);
             }
         }
 
@@ -151,7 +152,7 @@ namespace ProjectReferenceChecker
             if (!Directory.Exists(ProjectsDirectory))
             {
                 Console.WriteLine(string.Format($"Error: Cannot locate rule file at {RuleFilePath}"));
-                Environment.Exit((int)ErrorCodes.ProjectsDirectoryDoesNotExist);
+                Exit(ErrorCodes.ProjectsDirectoryDoesNotExist);
             }
 
             if (string.IsNullOrEmpty(RuleFilePath))
@@ -162,7 +163,7 @@ namespace ProjectReferenceChecker
             if (!File.Exists(RuleFilePath))
             {
                 Console.WriteLine(string.Format($"Error: Cannot locate rule file at {RuleFilePath}"));
-                Environment.Exit((int)ErrorCodes.RuleFileDoesNotExist);
+                Exit(ErrorCodes.RuleFileDoesNotExist);
             }
         }
 
@@ -196,6 +197,16 @@ namespace ProjectReferenceChecker
         {
             var replace = line.Replace("\"", string.Empty);
             return Path.GetFileNameWithoutExtension(replace);
+        }
+
+        private void Exit(ErrorCodes errorCode)
+        {
+            if (PauseBeforeExit)
+            {
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+            }
+            Environment.Exit((int)errorCode);
         }
     }
 }

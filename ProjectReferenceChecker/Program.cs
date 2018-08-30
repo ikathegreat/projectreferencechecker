@@ -18,24 +18,33 @@ namespace ProjectReferenceChecker
                 AcceptSlash = true
             };
 
+            /*
+             * -p "C:\Users\paul.ikeda\source\Repos\SX_Core" -w
+             */
+
             //Required
             var projectFilesPath = new ValueArgument<string>(
                     'p', "projectFilesPath",
                     "Sets root search path for project files")
-                { Optional = false };
+            { Optional = false };
             parser.Arguments.Add(projectFilesPath);
 
             //Optional
             var ruleFilePath = new ValueArgument<string>(
                     'r', "ruleFilePath",
                     "Sets file path for rule file (uses exe location otherwise)")
-                { Optional = true };
+            { Optional = true };
             parser.Arguments.Add(ruleFilePath);
-            var outputProjectsToSearch = new ValueArgument<bool>(
+            var outputProjectsToSearch = new SwitchArgument(
                     'o', "outputProjectsToSearch",
-                    "Output to console the list of projects to search through")
-                { Optional = true };
+                    "Output to console the list of projects to search through", false)
+            { Optional = true };
             parser.Arguments.Add(outputProjectsToSearch);
+            var waitOnCompletion = new SwitchArgument(
+                    'w', "waitOnCompletion",
+                    "Wait for user input key when done processing before exiting", false)
+            { Optional = true };
+            parser.Arguments.Add(waitOnCompletion);
 
             try
             {
@@ -46,10 +55,13 @@ namespace ProjectReferenceChecker
                 {
                     ProjectsDirectory = projectFilesPath.Value,
                     RuleFilePath = ruleFilePath.Value,
-                    OutputProjectsToSearch = outputProjectsToSearch.Value
+                    OutputProjectsToSearch = outputProjectsToSearch.Value,
+                    PauseBeforeExit = waitOnCompletion.Value
+
                 };
 
                 processor.Process();
+
                 Environment.ExitCode = 0; //Success
 
             }
@@ -57,6 +69,12 @@ namespace ProjectReferenceChecker
             {
                 Console.WriteLine("Unknown CommandLineException error: " + e.Message);
                 Environment.ExitCode = (int)ErrorCodes.UnknownCommandLineExceptionError;
+            }
+
+            if (waitOnCompletion.Value)
+            {
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
             }
         }
     }
